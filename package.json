@@ -1,0 +1,123 @@
+{
+  "name": "crossext",
+  "displayName": "CrossExt — 8051 Compile & Flash",
+  "description": "Compile and flash EFM8/8051 projects using the bundled Call51 toolchain and EFM8_prog flash tool.",
+  "version": "0.1.0",
+  "publisher": "crossext",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "crossext-sidebar",
+          "title": "CrossExt",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "crossext-sidebar": [
+        {
+          "id": "crossext.actionsView",
+          "name": "Actions"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "crossext.compile",
+        "title": "CrossExt: Compile",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "crossext.flash",
+        "title": "CrossExt: Flash",
+        "icon": "$(zap)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "crossext.compile",
+        "key": "ctrl+shift+b",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "crossext.flash",
+        "key": "ctrl+shift+f",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "CrossExt",
+      "properties": {
+        "crossext.projectPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the project folder (containing src/ and inc/). Leave empty to use the current workspace folder."
+        },
+        "crossext.call51Path": {
+          "type": "string",
+          "default": "",
+          "description": "Path to Call51 directory. Leave empty to use the bundled toolchain."
+        },
+        "crossext.flashToolPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to EFM8_prog.exe. Leave empty to use the bundled tool."
+        },
+        "crossext.serialPort": {
+          "type": "string",
+          "default": "COM3",
+          "description": "Serial port for flashing (e.g. COM3, /dev/ttyUSB0)."
+        },
+        "crossext.mcuModel": {
+          "type": "string",
+          "default": "MODEFM8LB1",
+          "description": "MCU define file name (from Call51/Define/)."
+        },
+        "crossext.memoryModel": {
+          "type": "string",
+          "default": "Small",
+          "enum": ["Small", "Medium", "Large"],
+          "description": "Memory model for compilation."
+        },
+        "crossext.projectType": {
+          "type": "string",
+          "default": "C",
+          "enum": ["C", "ASM"],
+          "description": "Project type: C (.c files compiled with c51) or ASM (.asm files assembled with a51)."
+        },
+        "crossext.extraCompilerArgs": {
+          "type": "string",
+          "default": "",
+          "description": "Additional flags passed to c51.exe."
+        },
+        "crossext.flashArgs": {
+          "type": "string",
+          "default": "-f -r",
+          "description": "Additional flags passed to EFM8_prog.exe (e.g. '-f -r')."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "^18.0.0",
+    "typescript": "^5.3.0"
+  }
+}

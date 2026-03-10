@@ -1,0 +1,5 @@
+node_modules/
+out/
+*.vsix
+toolchain/EFM8_prog/*.obj
+toolchain/EFM8_prog/build_log*.txt
